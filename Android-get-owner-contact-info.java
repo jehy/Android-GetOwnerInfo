@@ -11,7 +11,15 @@ public class OwnerInfo {
 	// 1) get synchronization account email
 	// 2) get contact data, associated with this email
 	// by https://github.com/jehy
-
+	
+	
+	//WARNING! You need to have permissions
+	//
+	//<uses-permission android:name="android.permission.READ_CONTACTS" />
+	//<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	//
+	// in your AndroidManifest.xml for this code.
+	
 	public String id = null;
 	public String email = null;
 	public String phone = null;

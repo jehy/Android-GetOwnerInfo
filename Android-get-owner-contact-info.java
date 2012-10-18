@@ -1,3 +1,7 @@
+package com.commonsware.android.reporter2;
+
+import java.util.ArrayList;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -30,13 +34,23 @@ public class OwnerInfo {
 		final AccountManager manager = AccountManager.get(MainActivity);
 		final Account[] accounts = manager.getAccountsByType("com.google");
 		if (accounts[0].name != null) {
-			accountName = accounts[0].name;
-
+			accountName = accounts[0].name;				
+			String where=ContactsContract.CommonDataKinds.Email.DATA + " = ?";
+			ArrayList<String> what = new ArrayList<String>();
+		    what.add(accountName);			
+			Log.v("Got account", "Account " + accountName);
+			for (int i=1;i<accounts.length;i++)
+			{
+				where+=" or "+ContactsContract.CommonDataKinds.Email.DATA + " = ?";
+				what.add(accounts[i].name);
+				Log.v("Got account", "Account " + accounts[i].name);
+			}
+			String[] whatarr=(String[]) what.toArray(new String[what.size()]);
 			ContentResolver cr = MainActivity.getContentResolver();
 			Cursor emailCur = cr.query(
 					ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
-					ContactsContract.CommonDataKinds.Email.DATA + " = ?",
-					new String[] { accountName }, null);
+					where,
+					whatarr, null);
 			while (emailCur.moveToNext()) {
 				id = emailCur
 						.getString(emailCur

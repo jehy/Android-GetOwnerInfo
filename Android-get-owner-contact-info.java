@@ -1,7 +1,4 @@
-package com.commonsware.android.reporter2;
-
 import java.util.ArrayList;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
